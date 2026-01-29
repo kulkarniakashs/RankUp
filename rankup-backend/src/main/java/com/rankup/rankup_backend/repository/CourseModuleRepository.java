@@ -1,0 +1,12 @@
+package com.rankup.rankup_backend.repository;
+
+import com.rankup.rankup_backend.entity.CourseModule;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.UUID;
+
+public interface CourseModuleRepository extends JpaRepository<CourseModule, UUID> {
+
+    List<CourseModule> findByCourseIdOrderBySortOrder(UUID courseId);
+}
