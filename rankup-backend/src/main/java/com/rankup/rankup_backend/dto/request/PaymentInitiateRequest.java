@@ -1,4 +1,17 @@
-package com.rankup.rankup_backend.dto.request;
+package com.rankup.dto.request;
 
-public class PaymentIntiatereq {
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.util.UUID;
+
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+public class PaymentInitiateRequest {
+    @NotNull
+    private UUID courseId;
+
+    // provider chosen by client
+    @NotNull
+    private String provider; // RAZORPAY/STRIPE/MOCK
 }

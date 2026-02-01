@@ -5,6 +5,7 @@ import com.rankup.rankup_backend.entity.enums.CourseStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface CourseRepository extends JpaRepository<Course, UUID> {
@@ -14,4 +15,6 @@ public interface CourseRepository extends JpaRepository<Course, UUID> {
     List<Course> findByCategoryIdAndStatus(UUID categoryId, CourseStatus status);
 
     List<Course> findByTeacherId(UUID teacherId);
+
+    Optional<Course> findByIdAndTeacherId(UUID id, UUID teacherId);
 }

@@ -1,4 +1,4 @@
-package com.rankup.dto.request;
+package com.rankup.rankup_backend.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
