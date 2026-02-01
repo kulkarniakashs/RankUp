@@ -1,7 +1,9 @@
 package com.rankup.rankup_backend.service;
 
+import com.rankup.rankup_backend.dto.response.VideoResponse;
 import com.rankup.rankup_backend.entity.Course;
 import com.rankup.rankup_backend.entity.CourseModule;
+import com.rankup.rankup_backend.entity.ModuleVideo;
 import com.rankup.rankup_backend.entity.User;
 import com.rankup.rankup_backend.entity.enums.UserRole;
 import com.rankup.rankup_backend.dto.request.ModuleCreateRequest;
@@ -9,9 +11,12 @@ import com.rankup.rankup_backend.dto.response.ModuleResponse;
 import com.rankup.rankup_backend.exception.BadRequestException;
 import com.rankup.rankup_backend.repository.CourseModuleRepository;
 import com.rankup.rankup_backend.repository.CourseRepository;
+import com.rankup.rankup_backend.repository.ModuleVideoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +27,6 @@ public class ModuleService {
 
     private final CourseRepository courseRepository;
     private final CourseModuleRepository moduleRepository;
-
     /**
      * Teacher adds module to their own course.
      */
