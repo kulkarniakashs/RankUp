@@ -19,6 +19,14 @@ public class R2UploadService {
     @Value("${app.r2.bucket}")
     private String bucket;
 
+    public void validateImageContentType(String contentType) {
+        if (contentType == null) throw new IllegalArgumentException("contentType required");
+        String ct = contentType.toLowerCase();
+        if (!(ct.equals("image/png") || ct.equals("image/jpeg") || ct.equals("image/webp"))) {
+            throw new IllegalArgumentException("Only PNG/JPEG/WEBP allowed");
+        }
+    }
+
     public String presignPutUrl(String objectKey, String contentType) {
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucket)

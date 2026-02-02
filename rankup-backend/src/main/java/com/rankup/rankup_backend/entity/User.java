@@ -48,4 +48,7 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false, columnDefinition = "timestamptz")
     private OffsetDateTime updatedAt;
+
+    @Column(name = "profile_photo_key", length = 512)
+    private String profilePhotoKey;
 }
