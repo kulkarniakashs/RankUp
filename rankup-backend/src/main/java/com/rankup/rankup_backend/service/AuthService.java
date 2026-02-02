@@ -26,7 +26,7 @@ public class AuthService {
         if (userRepository.existsByEmail(req.getEmail())) {
             throw new BadRequestException("Email already registered");
         }
-
+        System.out.println(req);
         User user = new User();
         user.setEmail(req.getEmail().toLowerCase());
         user.setPasswordHash(passwordEncoder.encode(req.getPassword()));

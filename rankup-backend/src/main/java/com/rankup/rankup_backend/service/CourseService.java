@@ -172,7 +172,8 @@ public class CourseService {
                 c.getDescription(),
                 c.getFee(),
                 c.getStatus(),
-                c.getReviewComment()
+                c.getReviewComment(),
+                c.getThumbnailKey()
         );
     }
 }

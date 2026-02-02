@@ -1,6 +1,7 @@
 package com.rankup.rankup_backend.dto.response;
 
 import com.rankup.rankup_backend.entity.enums.CourseStatus;
+import com.rankup.rankup_backend.entity.Course;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,4 +18,19 @@ public class CourseResponse {
     private BigDecimal fee;
     private CourseStatus status;
     private String reviewComment;
+    private String thumbnailKey;
+
+    public static CourseResponse from(Course course) {
+        return new CourseResponse(
+                course.getId(),
+                course.getTeacher().getId(),
+                course.getCategory().getId(),
+                course.getTitle(),
+                course.getDescription(),
+                course.getFee(),
+                course.getStatus(),
+                course.getReviewComment(),
+                course.getThumbnailKey()
+        );
+    }
 }

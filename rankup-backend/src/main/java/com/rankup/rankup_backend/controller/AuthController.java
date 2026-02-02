@@ -18,6 +18,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signup(@Valid @RequestBody SignupRequest req) throws BadRequestException {
+        System.out.println(req.toString());
         return ResponseEntity.ok(authService.signup(req));
     }
 

@@ -17,4 +17,6 @@ public interface CourseRepository extends JpaRepository<Course, UUID> {
     List<Course> findByTeacherId(UUID teacherId);
 
     Optional<Course> findByIdAndTeacherId(UUID id, UUID teacherId);
+
+    List<Course> findCoursesByCategoryId(UUID categoryId);
 }
