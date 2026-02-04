@@ -2,6 +2,7 @@ package com.rankup.rankup_backend.repository;
 import com.rankup.rankup_backend.entity.Enrollment;
 import com.rankup.rankup_backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,4 +15,20 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, UUID> {
     boolean existsByStudentIdAndCourseId(UUID studentId, UUID courseId);
 
     List<Enrollment> findByStudentId(UUID student);
+
+    @Query("""
+        select distinct e.course.id
+        from Enrollment e
+        where e.student.id = :studentId
+          and e.status = 'ACTIVE'
+    """)
+    List<UUID> findPurchasedCourseIds(UUID studentId);
+
+    @Query("""
+        select distinct e.course.category.id
+        from Enrollment e
+        where e.student.id = :studentId
+          and e.status = 'ACTIVE'
+    """)
+    List<UUID> findPurchasedCategoryIds(UUID studentId);
 }

@@ -30,12 +30,15 @@ public class VideoController {
     }
 
     @GetMapping("/modules/{moduleId}/videos")
-    public ResponseEntity<List<VideoResponse>> listVideos(
-            @PathVariable UUID moduleId
-    ) {
+    public ResponseEntity<List<VideoResponse>> listVideos( @PathVariable UUID moduleId) {
         System.out.println(moduleId);
         return ResponseEntity.ok(
                 videoService.listVideosInModule(moduleId)
         );
+    }
+
+    @GetMapping("video-id/{videoId}")
+    public ResponseEntity<VideoResponse> getVideoDetails(@PathVariable UUID videoId){
+        return ResponseEntity.ok(videoService.videoDetails(videoId, currentUserService.requireUser()));
     }
 }

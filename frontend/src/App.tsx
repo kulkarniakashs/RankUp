@@ -4,9 +4,10 @@ import Signup from "./pages/auth/Signin";
 import Landing from "./pages/Landing";
 import { Route, Routes } from "react-router-dom";
 import AdminSignUp from './pages/auth/AdminSignUp'
+import { StudentRoutes } from "./routes/studnetRoutes";
 function App() {
   return (
-    <div className="w-full overflow-hidden bg-linear-to-br from-blue-50 via-purple-50 to-green-50">
+    <div className="w-full h-full overflow-hidden bg-linear-to-br from-blue-50 via-purple-50 to-green-50">
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/auth/signup" element={<Signup />} />
@@ -14,6 +15,7 @@ function App() {
         <Route path="/auth/signup/admin" element={<AdminSignUp/>} />
         {/* A fallback route for any non-existent paths */}
         {/* <Route path="*" element={<NotFound />} /> */}
+        {StudentRoutes}
       </Routes>
     </div>
   );

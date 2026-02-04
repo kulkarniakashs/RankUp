@@ -19,13 +19,13 @@ export default function Login() {
         email: email,
         password: password,
       })
-      let res = await axios.post(`${import.meta.env.VVITE_APP_BACKEND_URL}/auth/login`, {
+      let res = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/auth/login`, {
         email: email,
-        role : role,
+        password: password
       });
       localStorage.setItem('token', res.data.accessToken);
       console.log(res.data);
-      navigate('dashboard');
+      navigate('student/course');
     } catch (error) {
         alert(error);
     }

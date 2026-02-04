@@ -167,6 +167,8 @@ public class CourseService {
         return new CourseResponse(
                 c.getId(),
                 c.getTeacher().getId(),
+                c.getTeacher().getFullName(),
+                c.getTeacher().getProfilePhotoKey(),
                 c.getCategory().getId(),
                 c.getTitle(),
                 c.getDescription(),

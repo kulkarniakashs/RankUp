@@ -12,6 +12,8 @@ import java.util.UUID;
 public class CourseResponse {
     private UUID id;
     private UUID teacherId;
+    private String teacherName;
+    private String teacherProfilePhotoKey;
     private UUID categoryId;
     private String title;
     private String description;
@@ -24,6 +26,8 @@ public class CourseResponse {
         return new CourseResponse(
                 course.getId(),
                 course.getTeacher().getId(),
+                course.getTeacher().getFullName(),
+                course.getTeacher().getProfilePhotoKey(),
                 course.getCategory().getId(),
                 course.getTitle(),
                 course.getDescription(),

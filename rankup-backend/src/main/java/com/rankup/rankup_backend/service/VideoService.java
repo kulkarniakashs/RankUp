@@ -9,9 +9,7 @@ import com.rankup.rankup_backend.entity.enums.*;
 import com.rankup.rankup_backend.dto.request.VideoCreateRequest;
 import com.rankup.rankup_backend.dto.response.VideoResponse;
 import com.rankup.rankup_backend.exception.BadRequestException;
-import com.rankup.rankup_backend.repository.CourseModuleRepository;
-import com.rankup.rankup_backend.repository.ModuleVideoRepository;
-import com.rankup.rankup_backend.repository.TranscodingJobRepository;
+import com.rankup.rankup_backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -24,10 +22,11 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class VideoService {
-
+    private final EnrollmentRepository enrollmentRepository;
     private final CourseModuleRepository moduleRepository;
     private final ModuleVideoRepository videoRepository;
     private final TranscodingJobRepository transcodingJobRepository;
+    private final CourseRepository courseRepository;
     /**
      * ✅ THIS METHOD CREATES THE module_videos ROW
      * It stores: title, description, sortOrder, rawObjectKey, upload/processing status.
@@ -76,6 +75,15 @@ public class VideoService {
                 .stream()
                 .map(this::toResponse)
                 .toList();
+    }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    public VideoResponse videoDetails(UUID videoId, User student){
+        ModuleVideo video = videoRepository.findById(videoId).orElseThrow(()-> new BadRequestException("Video doesn't exist by this videoID"));
+        if(!enrollmentRepository.existsByStudentIdAndCourseId(student.getId(), video.getModule().getCourse().getId())){
+                throw new BadRequestException("You are not Enrolled in the course");
+        }
+        return toResponse(video);
     }
 
     private VideoResponse toResponse(ModuleVideo v) {

@@ -3,6 +3,7 @@ package com.rankup.rankup_backend.repository;
 import com.rankup.rankup_backend.entity.ModuleVideo;
 import com.rankup.rankup_backend.entity.enums.VideoProcessingStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.UUID;
