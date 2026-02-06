@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate();
 
   const navVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -47,10 +49,10 @@ export default function Header() {
 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <button className="px-6 py-2 text-gray-900 font-medium hover:text-blue-600 transition">
+          <button onClick={()=> {navigate('/auth/signup');}} className="px-6 py-2 text-gray-900 font-medium hover:text-blue-600 transition">
             Sign Up
           </button>
-          <button className="px-6 py-2 bg-linear-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+          <button  onClick={()=> {navigate('/auth/login');}} className="px-6 py-2 bg-linear-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105">
             Log In
           </button>
         </div>

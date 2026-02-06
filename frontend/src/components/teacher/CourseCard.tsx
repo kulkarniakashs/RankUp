@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import type { TeacherCourse } from "../../types/course";
 import StatusBadge from "./StatusBadge";
+import { http } from "../../api/http";
+import { useState } from "react";
 
 export default function TeacherCourseCard({
-  course,
+  courseProp,
 }: {
-  course: TeacherCourse;
+  courseProp: TeacherCourse;
 }) {
   const navigate = useNavigate();
-
+  const [course, setCourse] = useState<TeacherCourse>(courseProp);
   const hasThumbnail = Boolean(course.thumbnailKey);
 
   const canSubmit = course.status === "DRAFT" || course.status === "REJECTED";
@@ -59,7 +61,14 @@ export default function TeacherCourseCard({
 
           {canSubmit && (
             <button
-              onClick={() => navigate(`/teacher/course/${course.id}`)}
+              onClick={async () => {
+                try {
+                  await http.post(`/courses/${course.id}/submit`);
+                  setCourse({...course, status : "SUBMITTED"});
+                } catch (error) {
+                  
+                }
+              }}
               className={`flex-1 rounded-xl py-2 text-sm font-semibold transition
               ${
                 canSubmit

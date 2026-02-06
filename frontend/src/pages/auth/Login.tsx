@@ -6,6 +6,7 @@ import AuthButton from "../../components/auth/AuthButton";
 import axios from "axios";
 import type { Role } from "../../types/roles";
 import { useNavigate } from "react-router-dom";
+import {decodeToken} from 'react-jwt';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,8 +25,21 @@ export default function Login() {
         password: password
       });
       localStorage.setItem('token', res.data.accessToken);
-      console.log(res.data);
-      navigate('student/course');
+      let {role } = decodeToken(res.data.accessToken) as {role : string};
+      switch(role){
+        case 'STUDENT' : {
+          navigate('/student/dashboard');
+          break;
+        }
+        case 'TEACHER' : {
+          navigate('/teacher/dashboard');
+          break;
+        }
+        case 'ADMIN' : {
+          navigate('/admin/dashboard');
+          break;
+        }
+      }
     } catch (error) {
         alert(error);
     }

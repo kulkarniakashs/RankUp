@@ -47,11 +47,11 @@ public class AuthService {
         org.springframework.security.core.Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(req.getEmail().toLowerCase(), req.getPassword())
         );
-
+        User user = userRepository.findByEmail(req.getEmail()).orElseThrow();
         // If authentication succeeds, token issue:
         String token = jwtService.generateToken(
                 req.getEmail().toLowerCase(),
-                Map.of() // you can also add role/uid here by loading user
+                Map.of("role", user.getRole().name()) // you can also add role/uid here by loading user
         );
         return new AuthResponse(token, "Bearer");
     }

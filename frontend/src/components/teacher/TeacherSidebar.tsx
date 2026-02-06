@@ -81,22 +81,22 @@ export  function Sidebar() {
           </NavLink>
 
           <NavLink
-            to="/teacher/courses"
+            to="/teacher/course/create"
             className={({ isActive }) =>
               `${linkBase} ${isActive ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-100"}`
             }
           >
-            🎓 Courses
+            🎓 Create Course
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             to="/teacher/revenue"
             className={({ isActive }) =>
               `${linkBase} ${isActive ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-100"}`
             }
           >
-            💰 Revenue
-          </NavLink>
+            
+          </NavLink> */}
 
           <NavLink
             to="/teacher/profile"

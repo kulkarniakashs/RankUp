@@ -7,7 +7,7 @@ export default function StudentLayout() : React.ReactNode | Promise<React.ReactN
   const token = localStorage.getItem("token");
   if (!token) navigate('/auth/login');
   const { role } =  decodeToken(token || "") as {role : String};
-  if(role == 'STUDENT') navigate('auth/login');
+  if(role != 'STUDENT') navigate('/auth/login');
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-green-50">
       <div className="flex">

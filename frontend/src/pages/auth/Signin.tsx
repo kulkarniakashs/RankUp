@@ -6,6 +6,7 @@ import AuthButton from "../../components/auth/AuthButton";
 import type { Role } from "../../types/roles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { decodeToken } from "react-jwt";
 
 export default function Signup() {
   const [role, setRole] = useState<Role>("STUDENT");
@@ -16,23 +17,39 @@ export default function Signup() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-     console.log({
+      console.log({
         fullName: fullname,
         email: email,
         password: password,
-        role : role,
-      })
-      let res = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/auth/signup`, {
-        fullName: fullname,
-        email: email,
-        password: password,
-        role : role,
+        role: role,
       });
-      localStorage.setItem('token', res.data.accessToken);
-      console.log(res.data);
-      navigate('/dashboard');
+      let res = await axios.post(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/auth/signup`,
+        {
+          fullName: fullname,
+          email: email,
+          password: password,
+          role: role,
+        },
+      );
+      localStorage.setItem("token", res.data.accessToken);
+      let { role1 } = decodeToken(res.data.accessToken) as { role1: string };
+      switch (role1) {
+        case "STUDENT": {
+          navigate("/student/dashboard");
+          break;
+        }
+        case "TEACHER": {
+          navigate("/teacher/dashboard");
+          break;
+        }
+        case "ADMIN": {
+          navigate("/admin/dashboard");
+          break;
+        }
+      }
     } catch (error) {
-        alert(error);
+      alert(error);
     }
   }
   return (

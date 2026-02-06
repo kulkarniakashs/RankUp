@@ -104,7 +104,7 @@ export default function CourseMetadataEdit() {
     await http.put(`/courses/${courseId}`,{
       title,  description, fee, categoryId : course.categoryId
     })
-    navigate(`course/${courseId}/edit`);
+    navigate(`/teacher/course/${courseId}/edit`);
   }
 
   if (loading) {

@@ -3,7 +3,7 @@ import AuthLayout from "../../components/auth/AuthLayout";
 import AuthInput from "../../components/auth/AuthInput";
 import AuthButton from "../../components/auth/AuthButton";
 import axios from "axios";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Signup() {
       });
       localStorage.setItem('token', res.data.accessToken);
       console.log(res.data);
-      navigate('/dashboard');
+      navigate('admin/dashboard');
     } catch (error) {
         alert(error);
     }
