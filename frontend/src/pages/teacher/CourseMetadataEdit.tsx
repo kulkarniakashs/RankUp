@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { http } from "../../api/http";
 import { useNavigate, useParams } from "react-router-dom";
 import type { TeacherCourse as Course } from "../../types/course";
-import axios from "axios";
+import { thumbnailUpload } from "../../api/thumbnailUpload";
 
 async function fetchCourseById(courseId: string): Promise<Course> {
   const res = await http.get(`/teacher/course/${courseId}`);
@@ -93,24 +93,6 @@ export default function CourseMetadataEdit() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
-  async function thumbnailUpload() {
-    try {
-      const res = await http.post("uploads/course-thumbnail/init", {
-        courseId: course?.id,
-        fileName: thumbnailFile?.name,
-        contentType: thumbnailFile?.type,
-      });
-      await axios.put(res.data.uploadUrl, thumbnailFile, {
-        headers: {
-          "Content-Type": thumbnailFile?.type,
-        },
-      });
-      await http.put(`/courses/${courseId}/thumbnail/confirm`, {objectKey : res.data.objectKey});
-    } catch (err) {
-      alert(err);
-    }
-  }
-
   async function handleSave() {
     if (!course) return;
 
@@ -118,11 +100,11 @@ export default function CourseMetadataEdit() {
     if (!description) return alert("Description is required.");
     if (!categoryName) return alert("Category is required.");
     if (fee < 0) return alert("Fee cannot be negative.");
-    if (thumbnailFile) thumbnailUpload();
+    if (courseId && thumbnailFile) await thumbnailUpload(courseId, thumbnailFile);
     await http.put(`/courses/${courseId}`,{
       title,  description, fee, categoryId : course.categoryId
     })
-    navigate(`/teacher/course/${courseId}/edit`)
+    navigate(`course/${courseId}/edit`);
   }
 
   if (loading) {

@@ -39,8 +39,21 @@ public class VideoController {
         );
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("video-id/{videoId}")
-    public ResponseEntity<VideoResponse> getVideoDetails(@PathVariable UUID videoId){
+    public ResponseEntity<VideoResponse> getVideoDetailsByStudent(@PathVariable UUID videoId){
         return ResponseEntity.ok(videoService.videoDetails(videoId, currentUserService.requireUser()));
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("teacher/video-id/{videoId}")
+    public ResponseEntity<VideoResponse> getVideoDetailsByTeacher(@PathVariable UUID videoId){
+        return ResponseEntity.ok(videoService.videoDetailsForTeacher(videoId, currentUserService.requireUser()));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("admin/video-id/{videoId}")
+    public ResponseEntity<VideoResponse> getVideoDetailsByAdmin(@PathVariable UUID videoId){
+        return ResponseEntity.ok(videoService.videoDetailsForAdmin(videoId, currentUserService.requireUser()));
     }
 }

@@ -86,6 +86,21 @@ public class VideoService {
         return toResponse(video);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    public VideoResponse videoDetailsForAdmin(UUID videoId, User user){
+        ModuleVideo video = videoRepository.findById(videoId).orElseThrow(()-> new BadRequestException("Video doesn't exist by this videoID"));
+        return toResponse(video);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    public VideoResponse videoDetailsForTeacher(UUID videoId, User user){
+        ModuleVideo video = videoRepository.findById(videoId).orElseThrow(()-> new BadRequestException("Video doesn't exist by this videoID"));
+        if(!video.getModule().getCourse().getTeacher().getId().equals(user.getId())){
+            throw new BadRequestException("You are not owner of this Course");
+        }
+        return toResponse(video);
+    }
+
     private VideoResponse toResponse(ModuleVideo v) {
         return new VideoResponse(
                 v.getId(),

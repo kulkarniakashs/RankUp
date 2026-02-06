@@ -13,5 +13,13 @@ export const videosApi = {
   setVideoDetailsById: async (videoId : string, setVideo : React.Dispatch<React.SetStateAction<Video | null>>) : Promise<void> => {
     const res = await http.get(`/video-id/${videoId}`);
     setVideo(res.data);
+  },
+  setVideoDetailsByIdForTeacher: async (videoId : string, setVideo : React.Dispatch<React.SetStateAction<Video | null>>) : Promise<void> => {
+    const res = await http.get(`/teacher/video-id/${videoId}`);
+    setVideo(res.data);
+  },
+  setVideoDetailsByIdForAdmin: async (videoId : string, setVideo : React.Dispatch<React.SetStateAction<Video | null>>) : Promise<void> => {
+    const res = await http.get(`/admin/video-id/${videoId}`);
+    setVideo(res.data);
   }
 };

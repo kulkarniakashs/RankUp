@@ -8,6 +8,7 @@ import { videosApi } from "../../api/videoApi";
 import { http } from "../../api/http";
 import { ProgressBar } from "../../components/teacher/ProgressBar";
 import axios from "axios";
+import {PlayCircle } from "lucide-react";
 
 type VideoMap = Record<string, Video[]>;
 
@@ -310,12 +311,20 @@ export default function TeacherCourseEdit() {
                             <div
                               key={v.id}
                               className="rounded-xl border border-gray-200 bg-white/60 px-4 py-3"
+                              onClick={()=>{navigate(`/teacher/course/${courseId}/player?videoId=${v.id}`)}}
                             >
-                              <div className="font-medium text-gray-900">
-                                {v.title}
-                              </div>
-                              <div className="text-sm text-gray-600 mt-1">
-                                {v.description}
+                              <div className="flex items-center gap-2">
+                                <div>
+                                  <PlayCircle height={40} width={40}/>
+                                </div>
+                                <div>
+                                  <div className="font-medium text-gray-900">
+                                    {v.title}
+                                  </div>
+                                  <div className="text-sm text-gray-600 mt-1">
+                                    {v.description}
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           ))}
