@@ -5,6 +5,7 @@ import Landing from "./pages/Landing";
 import { Route, Routes } from "react-router-dom";
 import AdminSignUp from './pages/auth/AdminSignUp'
 import { StudentRoutes } from "./routes/studnetRoutes";
+import { TeacherRoutes } from "./routes/TeacherRoutes";
 function App() {
   return (
     <div className="w-full h-full overflow-hidden bg-linear-to-br from-blue-50 via-purple-50 to-green-50">
@@ -16,6 +17,7 @@ function App() {
         {/* A fallback route for any non-existent paths */}
         {/* <Route path="*" element={<NotFound />} /> */}
         {StudentRoutes}
+        {TeacherRoutes}
       </Routes>
     </div>
   );

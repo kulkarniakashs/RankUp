@@ -7,6 +7,7 @@ import com.rankup.rankup_backend.service.CurrentUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,19 +27,19 @@ public class CourseController {
         return ResponseEntity.ok(courseService.listApprovedCourses(categoryId));
     }
 
-    // Teacher create
+    @PreAuthorize("hasRole('TEACHER')")
     @PostMapping
     public ResponseEntity<CourseResponse> create(@Valid @RequestBody CourseCreateRequest req) {
         return ResponseEntity.ok(courseService.teacherCreateCourse(currentUserService.requireUser(), req));
     }
 
-    // Teacher update
+    @PreAuthorize("hasRole('TEACHER')")
     @PutMapping("/{courseId}")
-    public ResponseEntity<CourseResponse> update(@PathVariable UUID courseId, @Valid @RequestBody CourseUpdateRequest req) {
+    public ResponseEntity<CourseResponse> update(@PathVariable UUID courseId,@Valid @RequestBody CourseUpdateRequest req) {
         return ResponseEntity.ok(courseService.teacherUpdateCourse(currentUserService.requireUser(), courseId, req));
     }
 
-    // Teacher submit
+    @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/{courseId}/submit")
     public ResponseEntity<CourseResponse> submit(@PathVariable UUID courseId, @RequestBody(required = false) CourseReviewRequest req) {
         String comment = (req == null) ? null : req.getComment();
@@ -56,5 +57,11 @@ public class CourseController {
     @PostMapping("/{courseId}/reject")
     public ResponseEntity<CourseResponse> reject(@PathVariable UUID courseId, @Valid @RequestBody CourseReviewRequest req) {
         return ResponseEntity.ok(courseService.adminRejectCourse(currentUserService.requireUser(), courseId, req.getComment()));
+    }
+
+    @GetMapping("/byteacherId/{teacherId}")
+    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN', 'TEACHER')")
+    public ResponseEntity<List<CourseResponse>> coursesByTeacherId (@PathVariable UUID teacherId){
+        return ResponseEntity.ok(courseService.listCourseByTeacherId(teacherId));
     }
 }

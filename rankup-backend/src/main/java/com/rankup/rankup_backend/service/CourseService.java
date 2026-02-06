@@ -49,9 +49,9 @@ public class CourseService {
                 .orElseThrow(() -> new BadRequestException("Course not found for this teacher"));
 
         // allow updates only in DRAFT or REJECTED (common rule)
-        if (!(c.getStatus() == CourseStatus.DRAFT || c.getStatus() == CourseStatus.REJECTED)) {
-            throw new BadRequestException("Only DRAFT/REJECTED courses can be updated");
-        }
+//        if (!(c.getStatus() == CourseStatus.DRAFT || c.getStatus() == CourseStatus.REJECTED)) {
+//            throw new BadRequestException("Only DRAFT/REJECTED courses can be updated");
+//        }
 
         Category category = categoryRepository.findById(req.getCategoryId())
                 .orElseThrow(() -> new BadRequestException("Category not found"));
@@ -163,6 +163,16 @@ public class CourseService {
         return courses.stream().map(this::toResponse).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<CourseResponse> listCourseByTeacherId(UUID teacherId){
+        return courseRepository.findByTeacherId(teacherId).stream().map(course -> new CourseResponse(course.getId(), course.getTeacher().getId(), course.getTeacher().getFullName(), course.getTeacher().getProfilePhotoKey(), course.getCategory().getId(),course.getCategory().getName(), course.getTitle(), course.getDescription(), course.getFee(), course.getStatus(), course.getReviewComment(), course.getThumbnailKey())).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Course courseById(UUID courseId){
+        return courseRepository.findById(courseId).orElseThrow(()-> new RuntimeException("Course does not exist"));
+    }
+
     private CourseResponse toResponse(Course c) {
         return new CourseResponse(
                 c.getId(),
@@ -170,6 +180,7 @@ public class CourseService {
                 c.getTeacher().getFullName(),
                 c.getTeacher().getProfilePhotoKey(),
                 c.getCategory().getId(),
+                c.getCategory().getName(),
                 c.getTitle(),
                 c.getDescription(),
                 c.getFee(),

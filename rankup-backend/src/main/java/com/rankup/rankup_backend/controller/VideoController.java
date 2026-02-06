@@ -7,6 +7,7 @@ import com.rankup.rankup_backend.service.VideoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class VideoController {
     private final VideoService videoService;
     private final CurrentUserService currentUserService;
 
+    @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/modules/{moduleId}/videos")
     public ResponseEntity<VideoResponse> createVideo(
             @PathVariable UUID moduleId,

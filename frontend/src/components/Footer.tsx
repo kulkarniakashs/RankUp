@@ -11,10 +11,10 @@ export default function Footer() {
           {/* Brand Column */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">E</span>
+              <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold">R</span>
               </div>
-              <span className="text-xl font-bold text-white">Eadn</span>
+              <span className="text-xl font-bold text-white">RankUp</span>
             </div>
             <p className="text-sm leading-relaxed">
               Empowering students and teachers worldwide through accessible, affordable online education.

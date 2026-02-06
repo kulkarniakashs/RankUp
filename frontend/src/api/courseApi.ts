@@ -1,5 +1,5 @@
 import { http } from "./http";
-import type { Course } from "../types/course";
+import type { Course, TeacherCourse } from "../types/course";
 
 export const coursesApi = {
   approved: async (categoryId?: string): Promise<Course[]> => {
@@ -10,6 +10,10 @@ export const coursesApi = {
   },
   recommendtation: async (): Promise<Course[]> => {
     const res = await http.get("/students/me/recommendations");
+    return res.data;
+  },
+  byTeacherId : async(teacherId : string) : Promise<TeacherCourse[]> => {
+    const res = await http.get(`/byteacherId/${teacherId}`);
     return res.data;
   }
 };

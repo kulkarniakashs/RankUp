@@ -9,3 +9,8 @@ export interface Course {
   teacherProfilePhotoKey : string;
   categoryId : string;
 }
+
+export interface TeacherCourse extends Course {
+  status : string;
+  categoryName : string;
+}

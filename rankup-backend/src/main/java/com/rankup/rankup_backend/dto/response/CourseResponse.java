@@ -15,6 +15,7 @@ public class CourseResponse {
     private String teacherName;
     private String teacherProfilePhotoKey;
     private UUID categoryId;
+    private String categoryName;
     private String title;
     private String description;
     private BigDecimal fee;
@@ -29,6 +30,7 @@ public class CourseResponse {
                 course.getTeacher().getFullName(),
                 course.getTeacher().getProfilePhotoKey(),
                 course.getCategory().getId(),
+                course.getCategory().getName(),
                 course.getTitle(),
                 course.getDescription(),
                 course.getFee(),

@@ -2,11 +2,11 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import {decodeToken} from "react-jwt"
-export default function StudentLayout() {
+export default function StudentLayout() : React.ReactNode | Promise<React.ReactNode> {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  if (!token) return navigate('/auth/login');
-  const { role } =  decodeToken(token) as {role : String};
+  if (!token) navigate('/auth/login');
+  const { role } =  decodeToken(token || "") as {role : String};
   if(role == 'STUDENT') navigate('auth/login');
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-green-50">
