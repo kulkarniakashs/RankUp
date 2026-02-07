@@ -30,4 +30,10 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
     """)
     BigDecimal sumTeacherRevenue(@Param("teacherId") UUID teacherId,
                                  @Param("status") PaymentStatus status);
+
+    @Query("""
+        select coalesce(sum(p.amount), 0)
+        from Payment p
+    """)
+    BigDecimal sum();
 }

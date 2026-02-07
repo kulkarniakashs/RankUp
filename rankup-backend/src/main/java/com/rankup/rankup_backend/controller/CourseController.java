@@ -55,8 +55,9 @@ public class CourseController {
 
     // Admin reject (comment required)
     @PostMapping("/{courseId}/reject")
-    public ResponseEntity<CourseResponse> reject(@PathVariable UUID courseId, @Valid @RequestBody CourseReviewRequest req) {
-        return ResponseEntity.ok(courseService.adminRejectCourse(currentUserService.requireUser(), courseId, req.getComment()));
+    public ResponseEntity<CourseResponse> reject(@PathVariable UUID courseId,  @RequestBody(required = false) CourseReviewRequest req) {
+        String comment = (req == null) ? null : req.getComment();
+        return ResponseEntity.ok(courseService.adminRejectCourse(currentUserService.requireUser(), courseId, comment));
     }
 
     @GetMapping("/byteacherId/{teacherId}")

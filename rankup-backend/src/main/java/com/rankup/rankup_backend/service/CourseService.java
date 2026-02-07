@@ -173,6 +173,16 @@ public class CourseService {
         return courseRepository.findById(courseId).orElseThrow(()-> new RuntimeException("Course does not exist"));
     }
 
+    @Transactional(readOnly = true)
+    public List<CourseResponse> listPendingCourses(){
+        return courseRepository.findByStatus(CourseStatus.SUBMITTED).stream().map(course -> CourseResponse.from(course)).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CourseResponse> listRejectedCourses(){
+        return courseRepository.findByStatus(CourseStatus.REJECTED).stream().map(course -> CourseResponse.from(course)).toList();
+    }
+
     private CourseResponse toResponse(Course c) {
         return new CourseResponse(
                 c.getId(),

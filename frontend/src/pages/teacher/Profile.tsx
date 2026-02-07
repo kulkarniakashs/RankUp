@@ -20,7 +20,7 @@ export default function TeacherProfile() {
         <p className="text-gray-600 mt-1">Manage your account information.</p>
 
         <div className="mt-6 flex items-center gap-4">
-          <div ><img src={`${user.profilePhotoKey == null ? "/teacher.png": import.meta.env.VITE_APP_R2 + '/' + user.profilePhotoKey}`} alt="profile Photo" className="w-16 h-16 rounded-full bg-gray-200 object-cover" ></img></div>
+          <div ><img src={`${user.profilePhotoKey == null ? "/teacherPng.png": import.meta.env.VITE_APP_R2 + '/' + user.profilePhotoKey}`} alt="profile Photo" className="w-16 h-16 rounded-full bg-gray-200 object-cover" ></img></div>
           <div>
             <div className="font-semibold text-gray-900">{user.fullName}</div>
             <div className="text-sm text-gray-600">{user.email}</div>
